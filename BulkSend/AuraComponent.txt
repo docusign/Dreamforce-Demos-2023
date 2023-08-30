@@ -1,0 +1,18 @@
+<aura:component controller="BulkSendToContactsDemo"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+      
+    
+    <aura:attribute name="displayText" type="String" default="The below button will send an envelope to contacts who have the bulk send checkbox set to true" />
+<div class="slds-theme_default">
+    <div class="slds-align_absolute-center slds-text-align_center">
+        <p class="slds-text-heading_medium">{!v.displayText}</p>
+    </div>
+    
+    <div class="slds-align_absolute-center slds-text-align_center slds-m-top_medium">
+        <button class="slds-button slds-button_brand" onclick="{!c.handleClick}">
+            Bulk Send
+        </button>
+    </div>
+    </div>
+    
+</aura:component>
