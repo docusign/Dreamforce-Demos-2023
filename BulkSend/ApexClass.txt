@@ -4,8 +4,8 @@ public class BulkSendToContactsDemo {
     
      @AuraEnabled
     public static void runBulkSend() {
-        Id myListId = BulkSendWithWriteBackOppRec.buildList();
-        BulkSendWithWriteBackOppRec.bulkSendEnvelopes(myListId);
+        Id myListId = BulkSendToContactsDemo.buildList();
+        BulkSendToContactsDemo.bulkSendEnvelopes(myListId);
     }
     
     
