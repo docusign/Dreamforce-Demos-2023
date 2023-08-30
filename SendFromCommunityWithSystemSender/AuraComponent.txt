@@ -1,0 +1,9 @@
+<aura:component controller="SendEnvelopeFromCommunity" implements="forceCommunity:availableForAllPageTypes,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	 <aura:attribute name="recordId" type="Id" />
+    
+    <div>
+        <button class="slds-button slds-button_brand" onclick="{!c.handleClick}">
+            Send Envelope Demo One
+        </button>
+    </div>
+</aura:component>

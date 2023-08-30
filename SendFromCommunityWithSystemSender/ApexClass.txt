@@ -1,0 +1,43 @@
+public class SendEnvelopeFromCommunity{
+    //we need auraEnabled so that we can call this Apex code from our aura component. The Aura Component acts as the UI. The Apex code acts as the controller. 
+    @AuraEnabled
+    public static void sendEnvelopeMethod(ID recordID){
+        Id mySourceId = recordID; // The ID of the initiating Salesforce object.
+        
+        // Create an empty envelope.
+        dfsle.Envelope myEnvelope = dfsle.EnvelopeService.getEmptyEnvelope(
+            new dfsle.Entity(mySourceId));
+      
+        //we will use a Salesforce contact record as a Recipient here. We are getting a single contact whos name contains Bob.  
+        Contact myContact = [SELECT Id, Name, Email FROM Contact where contact.name = 'Tammy Signer' LIMIT 1];
+        
+        //use the Recipient.fromSource method to create the Recipient
+        dfsle.Recipient myRecipient = dfsle.Recipient.fromSource(
+            myContact.Name, // Recipient name
+            myContact.Email, // Recipient email
+            null, //Optional phone number
+            'Signer', //Role Name. Specify the exact role name from template
+            new dfsle.Entity(myContact.Id)); //source object for the Recipient
+        
+        //add Recipient to the Envelope
+        myEnvelope = myEnvelope.withRecipients(new List<dfsle.Recipient> { myRecipient });
+        
+        
+        dfsle.UUID myTemplateId = dfsle.UUID.parse('2df7d423-2037-444f-99a5-b5aa5f3a417f');
+        
+        //create a new document for the Envelope
+        dfsle.Document myDocument = dfsle.Document.fromTemplate(
+            myTemplateId, // templateId in dfsle.UUID format
+            'Test Template'); // name of the template
+        
+        //add document to the Envelope
+        myEnvelope = myEnvelope.withDocuments(new List<dfsle.Document> { myDocument });
+        
+        
+        myEnvelope = dfsle.EnvelopeService.sendEnvelope(
+            myEnvelope, // The envelope to send
+            true); // Send now?
+        
+        
+    }
+    }

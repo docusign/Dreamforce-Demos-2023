@@ -1,0 +1,23 @@
+({
+    handleClick: function(component, event, helper) {
+        var action = component.get("c.sendEnvelopeMethod");
+        var recordId = component.get("v.recordId");
+        action.setParams({
+            "recordID": recordId
+        });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                console.log("Success with state: " + state);
+                // Handle any logic you want to perform after the successful Apex call
+            } else {
+                console.log("Failed with state: " + state);
+                var errors = response.getError();
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    console.log("Error message: " + errors[0].message);
+                }
+            }
+        });
+        $A.enqueueAction(action);
+    }
+})
